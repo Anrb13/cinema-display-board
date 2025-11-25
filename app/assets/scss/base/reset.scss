@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Reset Styles
+   Полный сброс дефолтных стилей браузера
+   ========================================================================== */
+
+/* Убираем внешние отступы и padding у всех элементов */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Убираем дефолтные стили для HTML5 элементов */
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Основные настройки body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Убираем дефолтные стили списков */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Убираем дефолтные стили ссылок */
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Убираем дефолтные стили кнопок */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: none;
+  
+  /* Для Safari */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Убираем дефолтные стили полей ввода */
+input,
+textarea,
+select {
+  border: none;
+  background: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  
+  /* Убираем дефолтные стили в браузерах */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Убираем внутренние отступы */
+  padding: 0;
+  
+  /* Убираем стрелки у number input */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Для Firefox */
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* Убираем дефолтные стили для textarea */
+textarea {
+  resize: none; /* Отключаем изменение размера */
+  overflow: auto;
+}
+
+/* Убираем дефолтные стили для select */
+select {
+  /* Убираем стрелку в IE */
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+/* Убираем дефолтные стили таблиц */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+  text-align: left;
+  font-weight: normal;
+  vertical-align: top;
+}
+
+/* Убираем дефолтные стили заголовков */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+}
+
+/* Убираем дефолтные стили параграфов */
+p {
+  margin: 0;
+}
+
+/* Убираем дефолтные стили изображений */
+img {
+  border-style: none;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Убираем дефолтные стили fieldset и legend */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+legend {
+  padding: 0;
+  display: table;
+}
+
+/* Убираем дефолтные стили progress */
+progress {
+  vertical-align: baseline;
+}
+
+/* Убираем дефолтные стили hr */
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+/* Убираем дефолтные стили pre */
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+  margin: 0;
+}
+
+/* Убираем дефолтные стили abbr */
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+
+/* Убираем дефолтные стили code, kbd, samp */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Убираем дефолтные стили small */
+small {
+  font-size: 80%;
+}
+
+/* Убираем дефолтные стили sub и sup */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Убираем дефолтные стили details */
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+
+/* Убираем дефолтные стили template и [hidden] */
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Дополнительные утилитарные сбросы
+   ========================================================================== */
+
+/* Убираем выделение при клике на кнопки и ссылки */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+/* Убираем стандартное поведение long press на мобильных */
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Исключение для полей ввода и textarea - разрешаем выделение */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Убираем стандартные стили для range input */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+  
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+  
+  &::-moz-range-thumb {
+    border: none;
+  }
+}
+
+/* Убираем стандартные стили для color input */
+input[type="color"] {
+  border: none;
+  padding: 0;
+  
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  &::-webkit-color-swatch {
+    border: none;
+  }
+}
+
+/* Убираем стандартные стили для search input */
+input[type="search"] {
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+  }
+}
+
+/* Убираем стандартные стили для file input */
+input[type="file"] {
+  &::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+}
+
+/* ==========================================================================
+   Нормализация для доступности
+   ========================================================================== */
+
+/* Убеждаемся, что скрытые элементы остаются скрытыми */
+[hidden] {
+  display: none !important;
+}
+
+/* Убираем аутлайн у элементов, но оставляем для доступности */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Восстанавливаем аутлайн для клавиатурной навигации */
+:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Убираем анимации для пользователей, которые их отключили */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Сброс для SVG
+   ========================================================================== */
+
+svg {
+  fill: currentColor;
+  
+  /* Убираем лишнее пространство вокруг SVG */
+  &:not(:root) {
+    overflow: hidden;
+  }
+}
+
+/* ==========================================================================
+   Сброс для iframe
+   ========================================================================== */
+
+iframe {
+  border: 0;
+}
+
+/* ==========================================================================
+   Сброс для meter и progress
+   ========================================================================== */
+
+meter {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  &::-webkit-progress-bar {
+    background: none;
+  }
+}
