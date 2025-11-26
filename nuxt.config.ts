@@ -8,17 +8,26 @@ export default defineNuxtConfig({
     '@nuxt/hints',
     '@nuxt/image',
     '@nuxt/test-utils',
-    '@nuxt/ui'
+    '@pinia/nuxt',
+    'nuxt-toast',
   ],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: `
-            @use "~/assets/scss/mixins/breakpoints" as *;
-          `
-        }
-      }
-    }
-  }
-})
+            @use "~/assets/scss/mixins" as *;
+          `,
+        },
+      },
+    },
+  },
+  toast: {
+    composableName: 'useNotification',
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE_URL || 'http://localhost:3022',
+    },
+  },
+});
