@@ -3,6 +3,7 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <CdbLoadingOverlay />
   </UApp>
 </template>
 

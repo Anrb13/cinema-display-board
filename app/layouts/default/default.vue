@@ -3,19 +3,29 @@
     <nav class="cdb-nav">
       <ul class="cdb-nav__list">
         <li
-          v-for="item in NAV_LIST"
+          v-for="item in navList"
           :key="item.path"
           :class="[
             'cdb-nav__item',
-            checkIsCurrentPath(item.path) && 'cdb-nav__item--current',
+            item.path &&
+              checkIsCurrentPath(item.path) &&
+              'cdb-nav__item--current',
           ]"
         >
           <NuxtLink
+            v-if="item.path"
             :to="item.path"
             class="cdb-nav__link"
           >
             {{ item.title }}
           </NuxtLink>
+          <button
+            v-else
+            class="cdb-nav__link"
+            @click="authStore.logout"
+          >
+            {{ item.title }}
+          </button>
         </li>
       </ul>
     </nav>
@@ -26,14 +36,23 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
+import { useAuthStore } from '~/stores/auth';
 
-const NAV_LIST = [
+const route = useRoute();
+const authStore = useAuthStore();
+
+const loginRoute = computed(() =>
+  authStore.isAuthenticated
+    ? { title: 'Выход' }
+    : { path: '/login', title: 'Вход' }
+);
+
+const navList = computed(() => [
   { path: '/', title: 'Фильмы' },
   { path: '/cinema', title: 'Кинотеатры' },
   { path: '/tickets', title: 'Мои билеты' },
-  { path: '/login', title: 'Вход' },
-];
+  loginRoute.value,
+]);
 
 function checkIsCurrentPath(path: string) {
   return route.path === path;

@@ -11,17 +11,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-toast',
   ],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `
-            @use "~/assets/scss/mixins" as *;
-          `,
-        },
-      },
-    },
-  },
   toast: {
     composableName: 'useNotification',
   },
