@@ -21,12 +21,12 @@ export const useAuthStore = defineStore('authStore', () => {
         const token = await api.auth.login({ username, password });
         state.token.value = token;
         state.isAuthenticated.value = true;
+        navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(
           e,
           'Неверный логин или пароль. Проверьте введенные данные и попробуйте снова'
         );
-        throw e;
       } finally {
         baseStore.setLoading(false);
       }
@@ -38,9 +38,9 @@ export const useAuthStore = defineStore('authStore', () => {
         const token = await api.auth.register({ username, password });
         state.token.value = token;
         state.isAuthenticated.value = true;
+        navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(e);
-        throw e;
       } finally {
         baseStore.setLoading(false);
       }

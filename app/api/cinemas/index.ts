@@ -1,14 +1,12 @@
 import type { Cinema } from './types';
 
-const apiBaseUrl = useRuntimeConfig().public.apiBase;
-
-export default {
+export default (baseUrl: string) => ({
   /**
    * Возвращает список всех доступных кинотеатров.
    * @see http://localhost:3022/api-docs/#/Cinemas/get_cinemas
    */
   async getCinemas() {
-    const data: Cinema[] = await $fetch(`${apiBaseUrl}/cinemas`, {
+    const data: Cinema[] = await $fetch(`${baseUrl}/cinemas`, {
       method: 'GET',
     });
 
@@ -21,7 +19,7 @@ export default {
    */
   async getCinemaSessions(cinemaId: string) {
     const { message }: { message: string } = await $fetch(
-      `${apiBaseUrl}/cinemas/${cinemaId}/sessions`,
+      `${baseUrl}/cinemas/${cinemaId}/sessions`,
       {
         method: 'GET',
       }
@@ -29,4 +27,4 @@ export default {
 
     return message;
   },
-};
+});

@@ -1,14 +1,12 @@
 import type { Movie, MovieSession } from './types';
 
-const apiBaseUrl = useRuntimeConfig().public.apiBase;
-
-export default {
+export default (baseUrl: string) => ({
   /**
    * Возвращает список всех доступных фильмов.
    * @see http://localhost:3022/api-docs/#/Movies/get_movies
    */
   async getMovies() {
-    const data: Movie[] = await $fetch(`${apiBaseUrl}/movies`, {
+    const data: Movie[] = await $fetch(`${baseUrl}/movies`, {
       method: 'GET',
     });
 
@@ -21,7 +19,7 @@ export default {
    */
   async getMovieSessions(movieId: string) {
     const data: MovieSession[] = await $fetch(
-      `${apiBaseUrl}/movies/${movieId}/sessions`,
+      `${baseUrl}/movies/${movieId}/sessions`,
       {
         method: 'GET',
       }
@@ -29,4 +27,4 @@ export default {
 
     return data;
   },
-};
+});

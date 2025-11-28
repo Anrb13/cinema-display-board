@@ -51,11 +51,13 @@ import { validateLogin, validatePassword } from '~/utils/validation';
 const authStore = useAuthStore();
 
 const isAuthMode = ref(true);
+
 const model = reactive({
   username: '',
   password: '',
   verifiedPassword: '',
 });
+
 const errors = reactive({
   username: '',
   password: '',
@@ -77,12 +79,14 @@ const texts = computed(() =>
         infoBtn: 'войдите',
       }
 );
+
 const isFormValid = computed(
   () =>
     !errors.username &&
     !errors.password &&
     (isAuthMode.value || !errors.verifiedPassword)
 );
+
 const passwordAutocomplete = computed(() =>
   isAuthMode.value ? 'current-password' : 'new-password'
 );
@@ -93,6 +97,7 @@ function toggleMode() {
   errors.password = '';
   errors.verifiedPassword = '';
 }
+
 function validateModel() {
   const usernameValid = validateLogin(model.username);
   const passwordValid = validatePassword(model.password);
@@ -109,21 +114,20 @@ function validateModel() {
     errors.verifiedPassword = 'Введенные пароли не совпадают';
   }
 }
-async function submit() {
+
+function submit() {
   const payload = {
     username: model.username,
     password: model.password,
   };
 
   if (isAuthMode.value) {
-    await authStore.login(payload);
-    navigateTo({ path: '/tickets' });
+    authStore.login(payload);
   } else {
     validateModel();
 
     if (isFormValid.value) {
-      await authStore.register(payload);
-      navigateTo({ path: '/tickets' });
+      authStore.register(payload);
     }
   }
 }
