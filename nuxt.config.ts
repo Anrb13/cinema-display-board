@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@pinia/nuxt',
     'nuxt-toast',
+    'nuxt-svgo',
   ],
   toast: {
     composableName: 'useNotification',

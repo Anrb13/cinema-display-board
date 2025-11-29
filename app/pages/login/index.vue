@@ -16,6 +16,7 @@
       placeholder="Введите пароль"
       class="cdb-login__textfield"
       :autocomplete="passwordAutocomplete"
+      type="password"
     />
     <CdbTextField
       v-if="!isAuthMode"
@@ -25,19 +26,12 @@
       placeholder="Введите пароль повторно"
       class="cdb-login__textfield"
       :autocomplete="passwordAutocomplete"
+      type="password"
     />
-    <CdbButton
-      :text="texts.button"
-      class="cdb-login__btn"
-      @click="submit"
-    />
+    <CdbButton :text="texts.button" class="cdb-login__btn" @click="submit" />
     <div class="cdb-login__info">
       {{ texts.info }}
-      <button
-        type="button"
-        class="cdb-login__info-btn"
-        @click="toggleMode"
-      >
+      <button type="button" class="cdb-login__info-btn" @click="toggleMode">
         {{ texts.infoBtn }}
       </button>
     </div>

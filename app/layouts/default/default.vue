@@ -12,18 +12,10 @@
               'cdb-nav__item--current',
           ]"
         >
-          <NuxtLink
-            v-if="item.path"
-            :to="item.path"
-            class="cdb-nav__link"
-          >
+          <NuxtLink v-if="item.path" :to="item.path" class="cdb-nav__link">
             {{ item.title }}
           </NuxtLink>
-          <button
-            v-else
-            class="cdb-nav__link"
-            @click="authStore.logout"
-          >
+          <button v-else class="cdb-nav__link" @click="authStore.logout">
             {{ item.title }}
           </button>
         </li>

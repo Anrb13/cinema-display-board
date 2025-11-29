@@ -4,6 +4,7 @@ export interface CdbTextFieldProps {
   placeholder?: string;
   label?: string;
   autocomplete?: string;
+  type?: string;
 }
 
 export interface CdbTExtFieldEmits {

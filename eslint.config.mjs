@@ -1,6 +1,13 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
+import pluginVue from 'eslint-plugin-vue';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import vueEslintParser from 'vue-eslint-parser';
 
 export default withNuxt({
+  plugins: {
+    vue: pluginVue,
+    prettier: eslintPluginPrettierRecommended,
+  },
   rules: {
     'max-len': [
       'error',
@@ -14,5 +21,9 @@ export default withNuxt({
         ignoreTrailingComments: true, // Игнорировать комментарии в конце строк \
       },
     ],
+    'vue/no-multiple-template-root': 'off',
+  },
+  languageOptions: {
+    parser: vueEslintParser,
   },
 });

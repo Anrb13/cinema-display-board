@@ -13,13 +13,11 @@
       :autocomplete="autocomplete"
       :label="label"
       :class="['cdb-textfield__input', error && 'cdb-textfield__input--error']"
+      :type="type"
       @focus="emit('update:error', '')"
       @input="(event) => emitUpdateText(event.target)"
     />
-    <span
-      v-if="error"
-      class="cdb-textfield__error"
-    >
+    <span v-if="error" class="cdb-textfield__error">
       {{ error }}
     </span>
   </div>
@@ -34,6 +32,7 @@ const {
   label,
   error,
   autocomplete,
+  type,
 } = defineProps<CdbTextFieldProps>();
 const emit = defineEmits<CdbTExtFieldEmits>();
 

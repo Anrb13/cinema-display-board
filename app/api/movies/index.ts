@@ -17,7 +17,7 @@ export default (baseUrl: string) => ({
    * Возвращает список всех доступных киносеансов для указанного фильма.
    * @see http://localhost:3022/api-docs/#/Movies/get_movies__movieId__sessions
    */
-  async getMovieSessions(movieId: string) {
+  async getMovieSessions(movieId: number) {
     const data: MovieSession[] = await $fetch(
       `${baseUrl}/movies/${movieId}/sessions`,
       {
