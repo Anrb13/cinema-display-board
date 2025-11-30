@@ -1,0 +1,67 @@
+.cdb-movie-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+
+  &__head {
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--color-white);
+  }
+
+  &__back-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  &__content {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__poster {
+    width: 150px;
+    height: 220px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-white);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+  }
+
+  &__desc {
+    margin-bottom: 10px;
+  }
+
+  &__section {
+    padding: 10px 0 30px;
+  }
+
+  &-section {
+    &__date {
+      font-size: 20px;
+      line-height: 30px;
+      border-bottom: 1px solid var(--color-white);
+      padding-left: 40px;
+    }
+
+    &__cinema {
+      display: flex;
+      padding: 15px 60px 15px 40px;
+      gap: 20px;
+
+      &-name {
+        text-transform: capitalize;
+        flex-grow: 1;
+      }
+    }
+  }
+}

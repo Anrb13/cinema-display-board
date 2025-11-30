@@ -1,9 +1,15 @@
 .cdb-button {
+  --color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 6px 30px;
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
+  color: var(--color);
+  border: 1px solid var(--color);
   border-radius: 12px;
+
+  &:disabled {
+    --color: var(--color-gray-30);
+    cursor: default;
+  }
 }

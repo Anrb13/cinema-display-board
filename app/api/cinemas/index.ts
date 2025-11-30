@@ -1,12 +1,13 @@
 import type { Cinema } from './types';
 
-export default (baseUrl: string) => ({
+export default (baseURL: string) => ({
   /**
    * Возвращает список всех доступных кинотеатров.
    * @see http://localhost:3022/api-docs/#/Cinemas/get_cinemas
    */
   async getCinemas() {
-    const data: Cinema[] = await $fetch(`${baseUrl}/cinemas`, {
+    const data: Cinema[] = await $fetch(`/cinemas`, {
+      baseURL,
       method: 'GET',
     });
 
@@ -19,10 +20,11 @@ export default (baseUrl: string) => ({
    */
   async getCinemaSessions(cinemaId: string) {
     const { message }: { message: string } = await $fetch(
-      `${baseUrl}/cinemas/${cinemaId}/sessions`,
+      `/cinemas/${cinemaId}/sessions`,
       {
+        baseURL,
         method: 'GET',
-      }
+      },
     );
 
     return message;

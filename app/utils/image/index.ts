@@ -1,3 +1,3 @@
 export function getImageSrc(posterImage: string) {
-  return posterImage.replace(/.*\/static\/images/, '');
+  return `http://localhost:3022${posterImage}`;
 }

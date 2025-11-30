@@ -7,9 +7,10 @@
           :key="item.path"
           :class="[
             'cdb-nav__item',
-            item.path &&
-              checkIsCurrentPath(item.path) &&
-              'cdb-nav__item--current',
+            {
+              'cdb-nav__item--current':
+                item.path && checkIsCurrentPath(item.path),
+            },
           ]"
         >
           <NuxtLink v-if="item.path" :to="item.path" class="cdb-nav__link">
@@ -36,7 +37,7 @@ const authStore = useAuthStore();
 const loginRoute = computed(() =>
   authStore.isAuthenticated
     ? { title: 'Выход' }
-    : { path: '/login', title: 'Вход' }
+    : { path: '/login', title: 'Вход' },
 );
 
 const navList = computed(() => [

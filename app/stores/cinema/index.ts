@@ -1,4 +1,5 @@
 import { useApi } from '~/api';
+import type { Cinema } from '~/api/cinemas/types';
 import type { Movie, MovieSession } from '~/api/movies/types';
 
 export const useCinemaStore = defineStore('cinemaStore', () => {
@@ -6,7 +7,8 @@ export const useCinemaStore = defineStore('cinemaStore', () => {
 
   const state = {
     movies: ref<Movie[]>([]),
-    sessions: ref<Record<number, MovieSession[]>>({}),
+    movieSessions: ref<Record<MovieSession['movieId'], MovieSession[]>>({}),
+    cinemas: ref<Cinema[]>([]),
   };
 
   const actions = {
@@ -17,16 +19,33 @@ export const useCinemaStore = defineStore('cinemaStore', () => {
       }
     },
 
-    async fetchMovieSessions(movieId: number) {
-      if (!state.sessions.value[movieId]) {
+    async fetchMovieSessions(movieId: Movie['id']) {
+      if (!state.movieSessions.value[movieId]) {
         const sessions = await api.movies.getMovieSessions(movieId);
-        state.sessions.value[movieId] = sessions;
+        state.movieSessions.value[movieId] = sessions;
       }
     },
+
+    async fetchCinemas() {
+      if (!state.cinemas.value.length) {
+        const cinemas = await api.cinemas.getCinemas();
+        state.cinemas.value = cinemas;
+      }
+    },
+  };
+
+  const getters = {
+    moviesMap: computed(() =>
+      Object.fromEntries(state.movies.value.map((item) => [item.id, item])),
+    ),
+    cinemasMap: computed(() =>
+      Object.fromEntries(state.cinemas.value.map((item) => [item.id, item])),
+    ),
   };
 
   return {
     ...state,
     ...actions,
+    ...getters,
   };
 });

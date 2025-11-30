@@ -1,12 +1,13 @@
 import type { UserInfo } from './types';
 
-export default (baseUrl: string) => ({
+export default (baseURL: string) => ({
   /**
    * Аутентификация пользователя и получение JWT токена.
    * @see http://localhost:3022/api-docs/#/Auth/post_login
    */
   async login({ username, password }: UserInfo) {
-    const { token }: { token: string } = await $fetch(`${baseUrl}/login`, {
+    const { token }: { token: string } = await $fetch(`/login`, {
+      baseURL,
       method: 'POST',
       body: { username, password },
     });
@@ -19,7 +20,8 @@ export default (baseUrl: string) => ({
    * @see http://localhost:3022/api-docs/#/Auth/post_register
    */
   async register({ username, password }: UserInfo) {
-    const { token }: { token: string } = await $fetch(`${baseUrl}/register`, {
+    const { token }: { token: string } = await $fetch(`/register`, {
+      baseURL,
       method: 'POST',
       body: { username, password },
     });

@@ -7,15 +7,15 @@ import settings from './settings';
 import users from './users';
 
 export const useApi = () => {
-  const baseUrl = useRuntimeConfig().public.apiBase;
+  const baseURL = useRuntimeConfig().public.apiBase;
 
   return {
-    auth: auth(baseUrl),
-    bookings: bookings(baseUrl),
-    cinemas: cinemas(baseUrl),
-    movies: movies(baseUrl),
-    movieSessions: movieSessions(baseUrl),
-    settings: settings(baseUrl),
-    users: users(baseUrl),
+    auth: auth(baseURL),
+    bookings: bookings(baseURL),
+    cinemas: cinemas(baseURL),
+    movies: movies(baseURL),
+    movieSessions: movieSessions(baseURL),
+    settings: settings(baseURL),
+    users: users(baseURL),
   };
 };

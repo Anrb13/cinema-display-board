@@ -1,8 +1,5 @@
 <template>
-  <button
-    class="cdb-button"
-    type="button"
-  >
+  <button class="cdb-button" type="button">
     {{ text }}
   </button>
 </template>

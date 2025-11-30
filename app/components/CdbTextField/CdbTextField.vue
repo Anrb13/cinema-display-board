@@ -15,7 +15,7 @@
       :class="['cdb-textfield__input', error && 'cdb-textfield__input--error']"
       :type="type"
       @focus="emit('update:error', '')"
-      @input="(event) => emitUpdateText(event.target)"
+      @input="emitUpdateText"
     />
     <span v-if="error" class="cdb-textfield__error">
       {{ error }}
@@ -36,8 +36,8 @@ const {
 } = defineProps<CdbTextFieldProps>();
 const emit = defineEmits<CdbTExtFieldEmits>();
 
-function emitUpdateText(target: EventTarget | null) {
-  const { value } = target as HTMLInputElement;
+function emitUpdateText(event: Event) {
+  const { value } = event.target as HTMLInputElement;
   emit('update:text', value.replace(/\s/g, ''));
 }
 </script>

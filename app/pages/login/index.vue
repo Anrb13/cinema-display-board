@@ -28,7 +28,12 @@
       :autocomplete="passwordAutocomplete"
       type="password"
     />
-    <CdbButton :text="texts.button" class="cdb-login__btn" @click="submit" />
+    <CdbButton
+      :text="texts.button"
+      class="cdb-login__btn"
+      :disabled="submitDisabled"
+      @click="submit"
+    />
     <div class="cdb-login__info">
       {{ texts.info }}
       <button type="button" class="cdb-login__info-btn" @click="toggleMode">
@@ -40,7 +45,11 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth';
-import { validateLogin, validatePassword } from '~/utils/validation';
+import {
+  validateLogin,
+  validatePassword,
+  validateVerifiedPassword,
+} from '~/utils/validation';
 
 const authStore = useAuthStore();
 
@@ -71,18 +80,25 @@ const texts = computed(() =>
         button: 'Зарегистрироваться',
         info: 'Если вы уже зарегистрированы -',
         infoBtn: 'войдите',
-      }
+      },
+);
+
+const submitDisabled = computed(
+  () =>
+    !model.username ||
+    !model.password ||
+    (!isAuthMode.value && !model.verifiedPassword),
 );
 
 const isFormValid = computed(
   () =>
     !errors.username &&
     !errors.password &&
-    (isAuthMode.value || !errors.verifiedPassword)
+    (isAuthMode.value || !errors.verifiedPassword),
 );
 
 const passwordAutocomplete = computed(() =>
-  isAuthMode.value ? 'current-password' : 'new-password'
+  isAuthMode.value ? 'current-password' : 'new-password',
 );
 
 function toggleMode() {
@@ -93,20 +109,12 @@ function toggleMode() {
 }
 
 function validateModel() {
-  const usernameValid = validateLogin(model.username);
-  const passwordValid = validatePassword(model.password);
-  const verifiedPasswordValid = model.password === model.verifiedPassword;
-
-  if (!usernameValid) {
-    errors.username = 'Введите не менее 8 символов';
-  }
-  if (!passwordValid) {
-    errors.password =
-      'Введите не менее 8 символов, 1 заглавную букву и 1 цифру';
-  }
-  if (!verifiedPasswordValid) {
-    errors.verifiedPassword = 'Введенные пароли не совпадают';
-  }
+  errors.username = validateLogin(model.username);
+  errors.password = validatePassword(model.password);
+  errors.verifiedPassword = validateVerifiedPassword(
+    model.password,
+    model.verifiedPassword,
+  );
 }
 
 function submit() {
@@ -114,13 +122,12 @@ function submit() {
     username: model.username,
     password: model.password,
   };
+  validateModel();
 
-  if (isAuthMode.value) {
-    authStore.login(payload);
-  } else {
-    validateModel();
-
-    if (isFormValid.value) {
+  if (isFormValid.value) {
+    if (isAuthMode.value) {
+      authStore.login(payload);
+    } else {
       authStore.register(payload);
     }
   }
