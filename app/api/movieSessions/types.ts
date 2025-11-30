@@ -14,3 +14,7 @@ export interface MovieSessionInfo {
   };
   bookedSeats: Seat[];
 }
+
+export interface BookingInfo {
+  bookingId: string;
+}

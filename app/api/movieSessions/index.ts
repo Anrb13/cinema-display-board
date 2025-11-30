@@ -1,5 +1,5 @@
 import type { MovieSession } from '../movies/types';
-import type { MovieSessionInfo, Seat } from './types';
+import type { BookingInfo, MovieSessionInfo, Seat } from './types';
 
 export default (baseURL: string) => ({
   /**
@@ -29,7 +29,7 @@ export default (baseURL: string) => ({
     movieSessionId: MovieSession['id'];
     seats: Seat[];
   }) {
-    const data: MovieSessionInfo = await $fetch(
+    const data: BookingInfo = await $fetch(
       `/movieSessions/${movieSessionId}/bookings`,
       {
         baseURL,

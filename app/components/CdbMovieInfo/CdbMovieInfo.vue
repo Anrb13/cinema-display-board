@@ -6,6 +6,7 @@
       </button>
       <h1 class="cdb-movie-info__title">{{ currentMovie.title }}</h1>
     </div>
+
     <div class="cdb-movie-info__content">
       <NuxtImg
         :src="getImageSrc(currentMovie.posterImage)"
@@ -29,32 +30,35 @@
 
     <div class="cdb-movie-info__sessions">
       <div
-        v-for="date in sessionsByDate.availableDates"
+        v-for="date in sessionsByDateAndCinema.availableDates"
         :key="date"
         class="cdb-movie-info__section cdb-movie-info-section"
       >
         <div class="cdb-movie-info-section__date">{{ date }}</div>
         <div
-          v-for="cinemaId in sessionsByDate[date]?.availableCinemas"
+          v-for="cinemaId in sessionsByDateAndCinema[date]?.availableCinemas"
           :key="cinemaId"
           class="cdb-movie-info-section__cinema"
         >
           <div class="cdb-movie-info-section__cinema-name">
             {{ cinemasMap?.[cinemaId]?.name }}
           </div>
-          <CdbButton
-            v-for="session in sessionsByDate?.[date]?.[cinemaId]"
-            :key="session.id"
-            :text="session.formattedTime"
-            @click="
-              emitBooking({
-                id: session.id,
-                cinemaName: cinemasMap?.[cinemaId]?.name,
-                date: date,
-                time: session.formattedTime,
-              })
-            "
-          />
+          <div class="cdb-movie-info-section__btns">
+            <CdbButton
+              v-for="session in sessionsByDateAndCinema?.[date]?.[cinemaId]"
+              :key="session.id"
+              :text="session.formattedTime"
+              class="cdb-movie-info-section__btn"
+              @click="
+                emitBooking({
+                  id: session.id,
+                  cinemaName: cinemasMap?.[cinemaId]?.name,
+                  date: date,
+                  time: session.formattedTime,
+                })
+              "
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -63,19 +67,16 @@
 
 <script setup lang="ts">
 import IcBack from '~/assets/icons/back.svg';
+import type { SessionInfoForBooking } from '~/types';
 import { getImageSrc } from '~/utils/image';
-import { mapSessionsByDate } from '~/utils/sessions';
-import type {
-  CdbMovieInfoEmits,
-  CdbMovieInfoProps,
-  SessionInfoForBooking,
-} from './types';
+import { mapSessionsByDateAndCinema } from '~/utils/sessions';
+import type { CdbMovieInfoEmits, CdbMovieInfoProps } from './types';
 
 const { currentMovie, sessions, cinemasMap } = defineProps<CdbMovieInfoProps>();
 const emit = defineEmits<CdbMovieInfoEmits>();
 
-const sessionsByDate = computed(() => {
-  return mapSessionsByDate(sessions);
+const sessionsByDateAndCinema = computed(() => {
+  return mapSessionsByDateAndCinema(sessions);
 });
 
 function emitBooking({ id, cinemaName, date, time }: SessionInfoForBooking) {

@@ -1,27 +1,29 @@
 import { format, parseISO } from 'date-fns';
 import type { MovieSession } from '~/api/movies/types';
-import type { SessionsByDate } from '~/components/CdbMovieInfo/types';
+import type { SessionsByDateAndCinema, SessionsByDateAndMovie } from '~/types';
 
-/**
- * Формирует список дат и группирует кинотеатры по датам.
- * Для каждого кинотеатра группирует сеансы.
- */
-export function mapSessionsByDate(arr: MovieSession[]) {
-  return arr.reduce<SessionsByDate>(
+function formatDateAndTime(startTime: string) {
+  const date = parseISO(startTime);
+  const dateString = format(date, 'dd.MM');
+  const timeString = format(date, 'HH:mm');
+
+  return { dateString, timeString };
+}
+
+export function mapSessionsByDateAndCinema(arr: MovieSession[]) {
+  return arr.reduce<SessionsByDateAndCinema>(
     (acc, session) => {
       // Форматируем дату и время для отображения
-      const date = parseISO(session.startTime);
-      const dateKey = format(date, 'dd.MM');
-      const timeString = format(date, 'HH:mm');
+      const { dateString, timeString } = formatDateAndTime(session.startTime);
 
       // Инициализация структуры для даты
-      if (!acc[dateKey]) {
-        acc[dateKey] = {
+      if (!acc[dateString]) {
+        acc[dateString] = {
           availableCinemas: [],
         };
       }
 
-      const dateData = acc[dateKey];
+      const dateData = acc[dateString];
 
       // Добавление кинотеатра в список доступных
       if (!dateData.availableCinemas.includes(session.cinemaId)) {
@@ -40,14 +42,58 @@ export function mapSessionsByDate(arr: MovieSession[]) {
       });
 
       // Обновление списка доступных дат
-      if (!acc.availableDates.includes(dateKey)) {
-        acc.availableDates.push(dateKey);
+      if (!acc.availableDates.includes(dateString)) {
+        acc.availableDates.push(dateString);
       }
 
       return acc;
     },
     {
       availableDates: [],
-    } as unknown as SessionsByDate,
+    } as unknown as SessionsByDateAndCinema,
+  );
+}
+
+export function mapSessionsByDateAndMovie(arr: MovieSession[]) {
+  return arr.reduce<SessionsByDateAndMovie>(
+    (acc, session) => {
+      // Форматируем дату и время для отображения
+      const { dateString, timeString } = formatDateAndTime(session.startTime);
+
+      // Инициализация структуры для даты
+      if (!acc[dateString]) {
+        acc[dateString] = {
+          availableMovies: [],
+        };
+      }
+
+      const dateData = acc[dateString];
+
+      // Добавление фильма в список доступных
+      if (!dateData.availableMovies.includes(session.movieId)) {
+        dateData.availableMovies.push(session.movieId);
+      }
+
+      // Инициализация данных фильма
+      if (!dateData[session.movieId]) {
+        dateData[session.movieId] = [];
+      }
+
+      // Добавление сеанса
+      dateData?.[session.movieId]?.push({
+        ...session,
+        formattedTime: timeString,
+      });
+
+      // Обновление списка доступных дат
+      if (!acc.availableDates.includes(dateString)) {
+        acc.availableDates.push(dateString);
+      }
+
+      return acc;
+    },
+    {
+      availableDates: [],
+    } as unknown as SessionsByDateAndMovie,
   );
 }

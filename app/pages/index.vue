@@ -1,43 +1,36 @@
 <template>
-  <FadeTransition>
-    <CdbMoviesList
-      v-show="pageMode === Mode.LIST"
-      :key="Mode.LIST"
-      :movies="cinemaStore.movies"
-      @about="openMovieInfo"
-    />
-  </FadeTransition>
+  <CdbMoviesList
+    v-if="pageMode === Mode.LIST"
+    :key="Mode.LIST"
+    :movies="cinemaStore.movies"
+    @about="openMovieInfo"
+  />
 
-  <FadeTransition>
-    <CdbMovieInfo
-      v-if="pageMode === Mode.MOVIE && currentMovie && currentMovieSessions"
-      :key="Mode.MOVIE"
-      :current-movie="currentMovie"
-      :sessions="currentMovieSessions"
-      :cinemas-map="cinemaStore.cinemasMap"
-      @back="pageMode = Mode.LIST"
-      @booking="goToBooking"
-    />
-  </FadeTransition>
+  <CdbMovieInfo
+    v-if="pageMode === Mode.MOVIE && currentMovie && currentMovieSessions"
+    :key="Mode.MOVIE"
+    :current-movie="currentMovie"
+    :sessions="currentMovieSessions"
+    :cinemas-map="cinemaStore.cinemasMap"
+    @back="pageMode = Mode.LIST"
+    @booking="goToBooking"
+  />
 
-  <FadeTransition>
-    <CdbMovieBooking
-      v-if="pageMode === Mode.BOOKING && bookingInfo && currentMovieSessionInfo"
-      :info="bookingInfo"
-      :movie-session-info="currentMovieSessionInfo"
-      @back="pageMode = Mode.MOVIE"
-      @book="bookSeats"
-    />
-  </FadeTransition>
+  <CdbMovieBooking
+    v-if="pageMode === Mode.BOOKING && bookingInfo && currentMovieSessionInfo"
+    :info="bookingInfo"
+    :movie-session-info="currentMovieSessionInfo"
+    @back="pageMode = Mode.MOVIE"
+    @book="bookSeats"
+  />
 </template>
 
 <script setup lang="ts">
 import type { Movie } from '~/api/movies/types';
-import type { Seat } from '~/api/movieSessions/types';
-import CdbMovieInfo from '~/components/CdbMovieInfo/CdbMovieInfo.vue';
-import type { SessionInfoForBooking } from '~/components/CdbMovieInfo/types';
+import { useBooking } from '~/composables/booking';
 import { useErrorHadler } from '~/composables/errorHandler';
 import { useCinemaStore } from '~/stores/cinema';
+import type { SessionInfoForBooking } from '~/types';
 
 const enum Mode {
   LIST,
@@ -47,19 +40,14 @@ const enum Mode {
 
 const cinemaStore = useCinemaStore();
 const errorHandler = useErrorHadler();
+const { bookingInfo, currentMovieSessionInfo, bookSeats } = useBooking();
 
 const pageMode = ref<Mode>(Mode.LIST);
 const currentMovie = ref<Movie | undefined>(undefined);
-const bookingInfo = ref<SessionInfoForBooking | undefined>(undefined);
 
 const currentMovieSessions = computed(() =>
   currentMovie.value?.id
     ? cinemaStore.movieSessions[currentMovie?.value?.id]
-    : undefined,
-);
-const currentMovieSessionInfo = computed(() =>
-  bookingInfo.value?.id
-    ? cinemaStore.movieSessionsInfo[bookingInfo?.value?.id]
     : undefined,
 );
 
@@ -84,10 +72,6 @@ async function goToBooking(v: SessionInfoForBooking) {
   } catch (e) {
     errorHandler.handle(e);
   }
-}
-
-async function bookSeats(v: Seat[]) {
-  console.log(v);
 }
 
 onMounted(async () => {

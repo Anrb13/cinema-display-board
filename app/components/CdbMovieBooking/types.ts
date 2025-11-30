@@ -1,5 +1,5 @@
 import type { MovieSessionInfo, Seat } from '~/api/movieSessions/types';
-import type { SessionInfoForBooking } from '../CdbMovieInfo/types';
+import type { SessionInfoForBooking } from '~/types';
 
 export interface CdbMovieBookingProps {
   info: SessionInfoForBooking;

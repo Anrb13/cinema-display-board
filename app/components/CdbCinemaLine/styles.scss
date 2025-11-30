@@ -1,0 +1,25 @@
+.cdb-cinema-line {
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  gap: 20px;
+  min-height: 60px;
+
+  &__name {
+    width: 220px;
+  }
+
+  &__address {
+    flex-grow: 1;
+  }
+
+  &__button {
+    width: 190px;
+    height: 38px;
+  }
+
+  &__name,
+  &__button {
+    flex-shrink: 0;
+  }
+}

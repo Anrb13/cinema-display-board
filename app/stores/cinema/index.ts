@@ -35,6 +35,13 @@ export const useCinemaStore = defineStore('cinemaStore', () => {
       }
     },
 
+    async fetchCinemaSessions(cinemaId: Cinema['id']) {
+      if (!state.movieSessions.value[cinemaId]) {
+        const sessions = await api.cinemas.getCinemaSessions(cinemaId);
+        state.movieSessions.value[cinemaId] = sessions;
+      }
+    },
+
     async fetchMovieSessionInfo(movieSessionId: MovieSession['id']) {
       if (!state.movieSessionsInfo.value[movieSessionId]) {
         const movieSessionInfo =

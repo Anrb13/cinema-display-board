@@ -1,4 +1,4 @@
-import type { Cinema } from './types';
+import type { Cinema, CinemaSession } from './types';
 
 export default (baseURL: string) => ({
   /**
@@ -18,8 +18,8 @@ export default (baseURL: string) => ({
    * Возвращает список всех доступных сеансов для указанного кинотеатра.
    * @see http://localhost:3022/api-docs/#/Cinemas/get_cinemas__cinemaId__sessions
    */
-  async getCinemaSessions(cinemaId: string) {
-    const { message }: { message: string } = await $fetch(
+  async getCinemaSessions(cinemaId: Cinema['id']) {
+    const data: CinemaSession[] = await $fetch(
       `/cinemas/${cinemaId}/sessions`,
       {
         baseURL,
@@ -27,6 +27,6 @@ export default (baseURL: string) => ({
       },
     );
 
-    return message;
+    return data;
   },
 });

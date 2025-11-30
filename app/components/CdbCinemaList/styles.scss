@@ -1,0 +1,16 @@
+.cdb-cinema-list {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+  gap: 20px;
+
+  &__head {
+    padding: 6px 60px;
+    display: flex;
+    border-bottom: 2px solid var(--color-gray-40);
+  }
+
+  &__cinema {
+    width: 240px;
+  }
+}
