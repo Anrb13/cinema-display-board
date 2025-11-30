@@ -1,9 +1,11 @@
 <template>
   <div class="cdb-movie-info">
-    <button class="cdb-movie-info__head" type="button" @click="emit('back')">
-      <IcBack class="cdb-movie-info__back-icon" />
-      <h1>{{ currentMovie.title }}</h1>
-    </button>
+    <div class="cdb-movie-info__head">
+      <button class="cdb-movie-info__back" type="button" @click="emit('back')">
+        <IcBack class="cdb-movie-info__back-icon" />
+      </button>
+      <h1 class="cdb-movie-info__title">{{ currentMovie.title }}</h1>
+    </div>
     <div class="cdb-movie-info__content">
       <NuxtImg
         :src="getImageSrc(currentMovie.posterImage)"

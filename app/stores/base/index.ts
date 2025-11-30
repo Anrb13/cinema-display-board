@@ -19,8 +19,15 @@ export const useBaseStore = defineStore('baseStore', () => {
     },
   };
 
+  const getters = {
+    loading: computed(() => state.loading.value),
+    bookingPaymentTimeSeconds: computed(
+      () => state.bookingPaymentTimeSeconds.value,
+    ),
+  };
+
   return {
-    ...state,
     ...actions,
+    ...getters,
   };
 });

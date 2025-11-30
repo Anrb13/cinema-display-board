@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-toast',
     'nuxt-svgo',
+    'nuxt-bezier',
   ],
   toast: {
     composableName: 'useNotification',

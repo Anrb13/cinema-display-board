@@ -1,0 +1,81 @@
+@use '~/assets/scss/mixins' as *;
+
+.cdb-seats-greed {
+  @include scrollbar;
+  $seatWidth: calc(100% / 12);
+  display: inline-block;
+  padding: 16px;
+  overflow: auto;
+  max-height: 65dvh;
+  font-size: 16px;
+  margin-top: 15px;
+
+  &__head {
+    display: flex;
+    margin-bottom: 8px;
+  }
+
+  &__empty {
+    width: $seatWidth;
+    flex-shrink: 0;
+  }
+
+  &__seat-number {
+    width: $seatWidth;
+    height: 25px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 2px;
+    flex-shrink: 0;
+  }
+
+  &__seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__row-number {
+    width: $seatWidth;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  &__seat-cell {
+    margin: 2px;
+    width: $seatWidth;
+    justify-content: center;
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  &__seat-checkbox {
+    display: none;
+  }
+
+  &__seat-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-gray-30);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  &__seat-checkbox:checked + .cdb-seats-greed__seat-label {
+    background: var(--color-blue-40);
+  }
+
+  &__seat-label--booked {
+    background: var(--color-red-40);
+    cursor: not-allowed;
+  }
+
+  &__seat-checkbox:disabled + .cdb-seats-greed__seat-label {
+    cursor: not-allowed;
+  }
+}

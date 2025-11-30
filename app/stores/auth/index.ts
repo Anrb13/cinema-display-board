@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('authStore', () => {
       } catch (e) {
         errorHandler.handle(
           e,
-          'Неверный логин или пароль. Проверьте введенные данные и попробуйте снова'
+          'Неверный логин или пароль. Проверьте введенные данные и попробуйте снова',
         );
       } finally {
         baseStore.setLoading(false);
@@ -57,8 +57,13 @@ export const useAuthStore = defineStore('authStore', () => {
     },
   };
 
+  const getters = {
+    isAuthenticated: computed(() => state.isAuthenticated.value),
+    token: computed(() => state.token.value),
+  };
+
   return {
-    ...state,
     ...actions,
+    ...getters,
   };
 });

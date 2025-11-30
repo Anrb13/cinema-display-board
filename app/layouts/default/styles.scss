@@ -1,3 +1,5 @@
+@use '~/assets/scss/mixins.scss' as *;
+
 .cdb {
   &-layout {
     display: flex;
@@ -8,18 +10,7 @@
       padding: 20px 40px;
       max-height: 100dvh;
       overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-gray-30) transparent;
-
-      &::-webkit-scrollbar {
-        display: block;
-        width: 4px;
-        height: 4px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: transparent;
-      }
+      @include scrollbar;
     }
   }
 
