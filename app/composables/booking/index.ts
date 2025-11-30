@@ -26,13 +26,18 @@ export const useBooking = () => {
         message: 'Для бронирования билетов необходимо авторизоваться',
         color: 'yellow',
       });
-      return navigateTo({ path: '/login' });
+      navigateTo({ path: '/login' });
     } else if (currentMovieSessionInfo.value?.id) {
       try {
         await api.movieSessions.bookSeatsToMovieSession({
           movieSessionId: currentMovieSessionInfo.value?.id,
           seats: v,
         });
+        notify.success({
+          message: 'Выбранные места успешно забронированы',
+          color: 'green',
+        });
+        navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(e);
       }

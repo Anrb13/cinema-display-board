@@ -1,0 +1,36 @@
+.cdb-tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__empty {
+    font-size: 26px;
+    text-align: center;
+
+    &-link {
+      text-decoration: underline;
+      color: var(--color-blue-20);
+    }
+  }
+
+  &__block {
+    &-title {
+      font-size: 14px;
+      color: var(--color-gray-30);
+      border-bottom: 2px solid var(--color-gray-30);
+      padding-bottom: 12px;
+    }
+  }
+}

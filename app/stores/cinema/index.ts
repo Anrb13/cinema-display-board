@@ -1,15 +1,20 @@
 import { useApi } from '~/api';
-import type { Cinema } from '~/api/cinemas/types';
+import type { Cinema, CinemaSession } from '~/api/cinemas/types';
 import type { Movie, MovieSession } from '~/api/movies/types';
-import type { MovieSessionInfo } from '~/api/movieSessions/types';
+import type { MovieSessionsInfo } from '~/types';
 
 export const useCinemaStore = defineStore('cinemaStore', () => {
   const api = useApi();
 
   const state = {
     movies: ref<Movie[]>([]),
-    movieSessions: ref<Record<MovieSession['movieId'], MovieSession[]>>({}),
-    movieSessionsInfo: ref<Record<MovieSession['id'], MovieSessionInfo>>({}),
+    movieSessions: ref<
+      Record<
+        MovieSession['movieId'] | CinemaSession['cinemaId'],
+        MovieSession[] | CinemaSession[]
+      >
+    >({}),
+    movieSessionsInfo: ref<MovieSessionsInfo>({}),
     cinemas: ref<Cinema[]>([]),
   };
 
@@ -42,8 +47,16 @@ export const useCinemaStore = defineStore('cinemaStore', () => {
       }
     },
 
-    async fetchMovieSessionInfo(movieSessionId: MovieSession['id']) {
-      if (!state.movieSessionsInfo.value[movieSessionId]) {
+    async fetchMovieSessionInfo(
+      movieSessionId: MovieSession['id'],
+      force = true,
+    ) {
+      /**
+       * При бронировании всегда обновляем, чтобы актуализировать свободные места,
+       * при запросе для страницы билетов актуальность свободных мест нас не интересует,
+       * поэтому лишний раз за известным сеансом не ходим
+       */
+      if (force || !state.movieSessionsInfo.value[movieSessionId]) {
         const movieSessionInfo =
           await api.movieSessions.getMovieSessionInfo(movieSessionId);
         state.movieSessionsInfo.value[movieSessionId] = movieSessionInfo;

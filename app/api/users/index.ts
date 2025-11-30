@@ -7,7 +7,7 @@ export default (fetch: ApiFetchType) => ({
    * @see http://localhost:3022/api-docs/#/Users/get_me_bookings
    */
   async getUserBookings() {
-    const data: UserBooking[] = await fetch(`/settings`, {
+    const data: UserBooking[] = await fetch(`/me/bookings`, {
       method: 'GET',
     });
 

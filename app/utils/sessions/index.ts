@@ -1,14 +1,6 @@
-import { format, parseISO } from 'date-fns';
 import type { MovieSession } from '~/api/movies/types';
 import type { SessionsByDateAndCinema, SessionsByDateAndMovie } from '~/types';
-
-function formatDateAndTime(startTime: string) {
-  const date = parseISO(startTime);
-  const dateString = format(date, 'dd.MM');
-  const timeString = format(date, 'HH:mm');
-
-  return { dateString, timeString };
-}
+import { formatDateAndTime } from '../date';
 
 export function mapSessionsByDateAndCinema(arr: MovieSession[]) {
   return arr.reduce<SessionsByDateAndCinema>(

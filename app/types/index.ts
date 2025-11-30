@@ -1,5 +1,7 @@
 import type { Cinema } from '~/api/cinemas/types';
 import type { Movie, MovieSession } from '~/api/movies/types';
+import type { MovieSessionInfo } from '~/api/movieSessions/types';
+import type { UserBooking } from '~/api/users/types';
 
 export type ApiFetchType = typeof $fetch;
 
@@ -30,3 +32,13 @@ type MovieSessions = Record<Movie['id'], SessionWithTime[]> & {
 export type SessionsByDateAndMovie = Record<string, MovieSessions> & {
   availableDates: string[];
 };
+
+export interface MappedBookingList {
+  unpaid: UserBooking[];
+  future: UserBooking[];
+  past: UserBooking[];
+}
+
+export type MoviesMap = Record<Movie['id'], Movie>;
+export type CinemasMap = Record<Cinema['id'], Cinema>;
+export type MovieSessionsInfo = Record<MovieSession['id'], MovieSessionInfo>;

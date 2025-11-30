@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('authStore', () => {
   const notify = useNotification();
 
   const state = {
-    token: ref<string | undefined>(undefined),
+    cookieToken: useCookie<string | undefined>('token'),
   };
 
   const actions = {
@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('authStore', () => {
       try {
         baseStore.setLoading(true);
         const token = await api.auth.login({ username, password });
-        state.token.value = token;
+        state.cookieToken.value = token;
         navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(
@@ -34,8 +34,12 @@ export const useAuthStore = defineStore('authStore', () => {
       try {
         baseStore.setLoading(true);
         const token = await api.auth.register({ username, password });
-        state.token.value = token;
+        state.cookieToken.value = token;
         navigateTo({ path: '/tickets' });
+        notify.success({
+          message: 'Вы успешно зарегистрировались',
+          color: 'green',
+        });
       } catch (e) {
         errorHandler.handle(e);
       } finally {
@@ -44,7 +48,7 @@ export const useAuthStore = defineStore('authStore', () => {
     },
 
     logout() {
-      state.token.value = undefined;
+      state.cookieToken.value = undefined;
       notify.success({
         message: 'Вы вышли из учетной записи',
         color: 'green',
@@ -54,8 +58,8 @@ export const useAuthStore = defineStore('authStore', () => {
   };
 
   const getters = {
-    isAuthenticated: computed(() => !!state.token.value?.length),
-    token: computed(() => state.token.value),
+    isAuthenticated: computed(() => !!state.cookieToken.value?.length),
+    token: computed(() => state.cookieToken.value),
   };
 
   return {

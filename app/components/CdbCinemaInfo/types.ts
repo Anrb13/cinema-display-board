@@ -1,11 +1,11 @@
 import type { Cinema } from '~/api/cinemas/types';
-import type { Movie, MovieSession } from '~/api/movies/types';
-import type { SessionInfoForBooking } from '~/types';
+import type { MovieSession } from '~/api/movies/types';
+import type { MoviesMap, SessionInfoForBooking } from '~/types';
 
 export interface CdbCinemaInfoProps {
   currentCinema: Cinema;
   sessions: MovieSession[];
-  moviesMap?: Record<Movie['id'], Movie>;
+  moviesMap?: MoviesMap;
 }
 
 export interface CdbCinemaInfoEmits {
