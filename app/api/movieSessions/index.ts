@@ -1,16 +1,16 @@
+import type { ApiFetchType } from '~/types';
 import type { MovieSession } from '../movies/types';
 import type { BookingInfo, MovieSessionInfo, Seat } from './types';
 
-export default (baseURL: string) => ({
+export default (fetch: ApiFetchType) => ({
   /**
    * Возвращает детальную информацию о сеансе, включая забронированные места.
    * @see http://localhost:3022/api-docs/#/Movie%20Sessions/get_movieSessions__movieSessionId_
    */
   async getMovieSessionInfo(movieSessionId: MovieSession['id']) {
-    const data: MovieSessionInfo = await $fetch(
+    const data: MovieSessionInfo = await fetch(
       `/movieSessions/${movieSessionId}`,
       {
-        baseURL,
         method: 'GET',
       },
     );
@@ -29,10 +29,9 @@ export default (baseURL: string) => ({
     movieSessionId: MovieSession['id'];
     seats: Seat[];
   }) {
-    const data: BookingInfo = await $fetch(
+    const data: BookingInfo = await fetch(
       `/movieSessions/${movieSessionId}/bookings`,
       {
-        baseURL,
         method: 'POST',
         body: {
           seats,

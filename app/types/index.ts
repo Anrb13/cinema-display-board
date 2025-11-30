@@ -1,6 +1,8 @@
 import type { Cinema } from '~/api/cinemas/types';
 import type { Movie, MovieSession } from '~/api/movies/types';
 
+export type ApiFetchType = typeof $fetch;
+
 export interface SessionInfoForBooking {
   id: MovieSession['id'];
   cinemaName?: Cinema['name'];

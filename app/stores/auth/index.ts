@@ -10,7 +10,6 @@ export const useAuthStore = defineStore('authStore', () => {
   const notify = useNotification();
 
   const state = {
-    isAuthenticated: ref(false),
     token: ref<string | undefined>(undefined),
   };
 
@@ -20,7 +19,6 @@ export const useAuthStore = defineStore('authStore', () => {
         baseStore.setLoading(true);
         const token = await api.auth.login({ username, password });
         state.token.value = token;
-        state.isAuthenticated.value = true;
         navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(
@@ -37,7 +35,6 @@ export const useAuthStore = defineStore('authStore', () => {
         baseStore.setLoading(true);
         const token = await api.auth.register({ username, password });
         state.token.value = token;
-        state.isAuthenticated.value = true;
         navigateTo({ path: '/tickets' });
       } catch (e) {
         errorHandler.handle(e);
@@ -47,7 +44,6 @@ export const useAuthStore = defineStore('authStore', () => {
     },
 
     logout() {
-      state.isAuthenticated.value = false;
       state.token.value = undefined;
       notify.success({
         message: 'Вы вышли из учетной записи',
@@ -58,7 +54,7 @@ export const useAuthStore = defineStore('authStore', () => {
   };
 
   const getters = {
-    isAuthenticated: computed(() => state.isAuthenticated.value),
+    isAuthenticated: computed(() => !!state.token.value?.length),
     token: computed(() => state.token.value),
   };
 

@@ -1,13 +1,13 @@
+import type { ApiFetchType } from '~/types';
 import type { Movie, MovieSession } from './types';
 
-export default (baseURL: string) => ({
+export default (fetch: ApiFetchType) => ({
   /**
    * Возвращает список всех доступных фильмов.
    * @see http://localhost:3022/api-docs/#/Movies/get_movies
    */
   async getMovies() {
-    const data: Movie[] = await $fetch(`/movies`, {
-      baseURL,
+    const data: Movie[] = await fetch(`/movies`, {
       method: 'GET',
     });
 
@@ -19,8 +19,7 @@ export default (baseURL: string) => ({
    * @see http://localhost:3022/api-docs/#/Movies/get_movies__movieId__sessions
    */
   async getMovieSessions(movieId: Movie['id']) {
-    const data: MovieSession[] = await $fetch(`/movies/${movieId}/sessions`, {
-      baseURL,
+    const data: MovieSession[] = await fetch(`/movies/${movieId}/sessions`, {
       method: 'GET',
     });
 
