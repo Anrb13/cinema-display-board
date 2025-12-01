@@ -19,6 +19,7 @@
     <CdbButton
       text="Забронировать"
       class="cdb-movie-booking__submit"
+      :disabled="!selectedSeats.length"
       @click="emit('book', selectedSeats)"
     />
   </div>
